@@ -39,6 +39,10 @@ TypeOrmModule.forRoot({
 export class AppModule {
   
 }
+
+
+
+
 // TypeOrmModule.forRoot({
 //   type: 'mysql',
 //   host:process.env.HOST,
