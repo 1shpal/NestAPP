@@ -40,7 +40,7 @@ export class AuthController {
        res.status(401).json({ message: 'Invalid username or password' });
     }
     const accessToken = await this.authService.generateJwtToken(user);
-    res.status(200).json({
+    res.status(HttpStatus.OK).json({
       message: 'Login successful',
       userId: user.id,
       username: user.username,
