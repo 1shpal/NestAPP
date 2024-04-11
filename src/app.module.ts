@@ -18,6 +18,25 @@ import { PassportModule } from '@nestjs/passport';
 //   synchronize: true, 
 // }),
 
+// @Module({
+//   imports: [
+// TypeOrmModule.forRoot({
+//   type: 'mysql',
+//   host:"mysql-1ab88fad-vanshpal0203projects-b372.b.aivencloud.com",
+//   port: 26893,
+//   username: 'avnadmin',
+//   password: 'AVNS_gYjbz3Hvs9MUUWWh6fe',
+//   database: 'defaultdb',
+//   entities: [User],  
+//   synchronize: true, 
+// }),
+//     AuthModule,
+//     UserModule,
+//     PassportModule
+//   ],
+// })
+
+
 @Module({
   imports: [
 TypeOrmModule.forRoot({
