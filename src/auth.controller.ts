@@ -1,5 +1,5 @@
 
-import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus, HttpException } from '@nestjs/common';
 import { Response } from 'express'; 
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
@@ -33,18 +33,32 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() body: { username: string; password: string }, @Res() res: Response): Promise<void> {
+  async login(@Body() body: { username: string; password: string }): Promise<{ message: string;  username: string; accessToken: string }> {
     const { username, password } = body;
     const user = await this.userService.findUserByUsername(username);
     if (!user || user.password !== password) {
-       res.status(401).json({ message: 'Invalid username or password' });
+      throw new HttpException('Invalid username or password', HttpStatus.UNAUTHORIZED);
     }
     const accessToken = await this.authService.generateJwtToken(user);
-    res.status(HttpStatus.OK).json({
+    return {
       message: 'Login successful',
-      userId: user.id,
       username: user.username,
       accessToken,
-    });
+    };
   }
+  // @Post('login')
+  // async login(@Body() body: { username: string; password: string }, @Res() res: Response): Promise<void> {
+  //   const { username, password } = body;
+  //   const user = await this.userService.findUserByUsername(username);
+  //   if (!user || user.password !== password) {
+  //      res.status(401).json({ message: 'Invalid username or password' });
+  //   }
+  //   const accessToken = await this.authService.generateJwtToken(user);
+  //   res.status(HttpStatus.OK).json({
+  //     message: 'Login successful',
+  //     userId: user.id,
+  //     username: user.username,
+  //     accessToken,
+  //   });
+  // }
 }
